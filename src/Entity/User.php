@@ -78,6 +78,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getVerifyCode(): ?string
+    {
+        return $this->verifyCode;
+    }
+
+    public function setVerifyCode(?string $verifyCode): self
+    {
+        $this->verifyCode = $verifyCode;
+        return $this;
+    }
+
+
     /**
      * A visual identifier that represents this user.
      *
