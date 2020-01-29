@@ -1,0 +1,41 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Meals{% endblock %}
+
+{% block body %}
+
+    {% include "admin/navbar.html.twig" %}
+
+    <div class="container mt-4">
+        <h1 class="mb-3">Meals</h1>
+
+        <a href="{{ path('admin.meal.create') }}" class="btn btn-primary mb-3">Add new one</a>
+        {% include "flashes.html.twig" %}
+
+        {% include "admin/meal/search.html.twig" %}
+
+        <table class="table table-bordered">
+            <tbody>
+            {% for meal in meals %}
+                <tr>
+                    <th >{{ meal.name }}</th>
+                    <td>{{ meal.description }}</td>
+                    <td>
+                    {% for ingestion in meal.ingestion  %}
+                        <span class="badge badge-light">{{ ingestion.name }}</span>
+                    {% endfor %}
+                    </td>
+                    <td>
+                        <a href="">Delete</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('admin.meal.edit', {id: meal.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ knp_pagination_render(meals) }}
+    </div>
+
+{% endblock %}

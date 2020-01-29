@@ -36,7 +36,14 @@ services:
         arguments:
             $paginator: '@knp_paginator'
 
+    App\Repository\MealRepository:
+        arguments:
+            $paginator: '@knp_paginator'
+
     App\Services\IngestionService:
+        arguments: ['@doctrine.orm.entity_manager']
+
+    App\Services\MealService:
         arguments: ['@doctrine.orm.entity_manager']
 
 

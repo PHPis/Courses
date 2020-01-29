@@ -16,6 +16,7 @@
         {% for ingestion in ingestions %}
                 <tr>
                     <th >{{ ingestion.name }}</th>
+                    <td>{{ ingestion.description }}</td>
                     <td>{{ ingestion.priority }}</td>
                     <td>
                         <a href="{{ path('admin.ingestion.delete', {id : ingestion.id}) }}">Delete</a>
@@ -27,6 +28,7 @@
         {% endfor %}
             </tbody>
         </table>
+        {{ knp_pagination_render(ingestions) }}
     </div>
 
 {% endblock %}

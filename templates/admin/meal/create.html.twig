@@ -1,0 +1,27 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Meals{% endblock %}
+
+{% block body %}
+
+    {% include "admin/navbar.html.twig" %}
+
+    <div class="container mt-4">
+        <h1 class="mb-3">{{ title }}</h1>
+
+        {% include "flashes.html.twig" %}
+
+        <div>
+            {{ form_start(mealForm) }}
+            {{ form_row(mealForm.name) }}
+            {{ form_row(mealForm.description) }}
+            {{ form_row(mealForm.ingestion) }}
+
+            <button class="btn btn-lg btn-primary" type="submit">
+                Save
+            </button>
+            {{ form_end(mealForm) }}
+        </div>
+    </div>
+
+{% endblock %}

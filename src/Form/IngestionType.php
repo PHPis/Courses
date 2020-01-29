@@ -17,6 +17,7 @@ class IngestionType extends AbstractType
                 'label' => 'Title'
             ])
             ->add('priority')
+            ->add('description')
         ;
     }
 

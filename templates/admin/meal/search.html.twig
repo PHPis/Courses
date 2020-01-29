@@ -1,0 +1,39 @@
+<form action="" method="get" class="form-inline mb-4">
+    <div class="form-group mr-3">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Meal"
+            {% if app.request.get('name') %}
+                value="{{ app.request.get('name') }}"
+            {% endif %}
+        >
+    </div>
+    <div class="form-group mr-3">
+        <label class="col-form-label col-sm-2 pt-0 ml-3 mr-4">Ingestion:</label>
+        <div class="form-group">
+            <div class="m-auto">
+                {% for ingestion in ingestions %}
+                    <div class="form-check d-flex justify-content-start">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="ingestion-select[]"
+                               id="gridRadios{{ ingestion.id }}"
+                               value="{{ ingestion.id }}"
+                                {% if ingestion.id in idIngestion %}
+                                    checked
+                                {% endif %}
+                        >
+                        <label class="form-check-label" for="gridRadios{{ ingestion.id }}">
+                            {{ ingestion.name }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    {#        <select class="form-control" id="ingestion-select" name="ingestion-select[]"  size="1" multiple>#}
+    {#            {% for ingestion in ingestions %}#}
+    {#                <option value="{{ ingestion.id }}">{{ ingestion.name }}</option>#}
+    {#            {% endfor %}#}
+    {#        </select>#}
+    </div>
+    <button type="submit" class="btn btn-primary"> <i class="fas fa-search"></i></button>
+</form>
