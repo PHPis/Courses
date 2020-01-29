@@ -41,7 +41,7 @@ class MealService
         }
     }
 
-    public function editMeal(Form $form, Meal $meal):void
+    public function editMeal(Form $form, Meal $meal): void
     {
         $meal->setName($form['name']->getData());
         $meal->setDescription($form['description']->getData());
@@ -54,6 +54,19 @@ class MealService
             $this->entityManager->flush();
         } catch (\Exception $e) {
             throw new \Exception("Exception of creating Ingestion.");
+        }
+    }
+
+    public function deleteMeal(int $id): bool
+    {
+        $meal = $this->findById($id);
+
+        $this->entityManager->remove($meal);
+        try {
+            $this->entityManager->flush();
+            return true;
+        } catch(\Exception $e) {
+            return false;
         }
     }
 

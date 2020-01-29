@@ -56,6 +56,16 @@ class MealController extends AbstractController
     }
 
     /**
+     * @Route("/admin/meal/{id}/delete", name="admin.meal.delete")
+     */
+    public function deleteMeal(int $id, MealService $mealService) {
+        if ($mealService->deleteMeal($id)) {
+            return $this->redirectToRoute('admin.meal');
+        }
+        throw new \Exception('Delete meal failed.');
+    }
+
+    /**
      * @Route("/admin/meal", name="admin.meal")
      */
     public function showMeals(MealService $mealService, IngestionService $ingestionService, Request $request)

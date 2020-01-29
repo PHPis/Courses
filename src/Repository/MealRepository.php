@@ -2,13 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\Ingestion;
 use App\Entity\Meal;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\Paginator;
-use function Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Meal|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,7 +25,7 @@ class MealRepository extends ServiceEntityRepository
         $this->paginator = $paginator;
     }
 
-    public function getAllMealQuery()
+    public function getAllMealQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('m')
             ->orderBy('m.id', 'ASC')
@@ -43,7 +42,7 @@ class MealRepository extends ServiceEntityRepository
         );
     }
 
-    public function searchQueryBuilder(string $name, ?array $ingestionIds)
+    public function searchQueryBuilder(string $name, ?array $ingestionIds): QueryBuilder
     {
         $query = $this->createQueryBuilder('m')
             ->orderBy('m.id', 'ASC')
