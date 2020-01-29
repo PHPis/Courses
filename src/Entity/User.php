@@ -43,6 +43,11 @@ class User implements UserInterface
     private $verifyCode;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
+
+    /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -65,6 +70,17 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
 
     public function getEmail(): ?string
     {

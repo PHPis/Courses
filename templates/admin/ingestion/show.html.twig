@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+
+    {% include "admin/navbar.html.twig" %}
+
+    <div class="container mt-4">
+        <h1 class="mb-3">Ingestions</h1>
+
+        {% include "flashes.html.twig" %}
+
+        <table class="table table-bordered">
+            <tbody>
+        {% for ingestion in ingestions %}
+                <tr>
+                    <th >{{ ingestion.name }}</th>
+                    <td>{{ ingestion.priority }}</td>
+                    <td>
+                        <a href="{{ path('admin.ingestion.delete', {id : ingestion.id}) }}">Delete</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('admin.ingestion.edit', {id : ingestion.id}) }}">Edit</a>
+                    </td>
+                </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

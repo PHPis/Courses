@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{{ path('courses') }}">Courses</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>
+    </div>
+    {% if app.user %}
+        <div class="row">
+            <a href="
+            {{ path('user.profile.settings') }}
+            " class="mr-4" title="settings"> <i class="fas fa-cog"></i>
+            </a>
+            <a href="
+                {% if 'ROLE_ADMIN' in app.user.roles %}
+                    {{ path('admin') }}
+                {% else %}
+                    {{ path('user.profile') }}
+                {% endif %}
+            " title="{{ app.user.username }} " class="mr-4"> My space </a>
+            <a href="{{ path('app_logout') }}" class="mr-4">Logout</a>
+        </div>
+    {% else %}
+        <div class="row mr-4">
+            <div class="mr-4">
+                <a href="{{ path('app_login') }}">Sign in</a>
+            </div>
+            <div class="mr-4">
+                <a href="{{ path('app_register') }}">Sign up</a>
+            </div>
+        </div>
+    {% endif %}
+</nav>

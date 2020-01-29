@@ -1,0 +1,26 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+
+    {% include "admin/navbar.html.twig" %}
+
+    <div class="container mt-4">
+        <h1 class="mb-3">{{ title }}</h1>
+
+        {% include "flashes.html.twig" %}
+
+        <div>
+            {{ form_start(createForm) }}
+            {{ form_row(createForm.name) }}
+            {{ form_row(createForm.priority) }}
+
+            <button class="btn btn-lg btn-primary" type="submit">
+                Save
+            </button>
+            {{ form_end(createForm) }}
+        </div>
+    </div>
+
+{% endblock %}

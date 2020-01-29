@@ -9,8 +9,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">My courses</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Ingestion
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('admin.ingestion') }}">Show all</a>
+                    <a class="dropdown-item" href="{{ path('admin.ingestion.create') }}">Add new one</a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -22,12 +28,12 @@
     </div>
     {% if app.user %}
         <div class="row">
+
             <a href="
-                {% if 'ROLE_ADMIN' in app.user.roles %}
-                    {{ path('admin') }}
-                {% else %}
-                    #
-                {% endif %}
+            {{ path('admin') }}
+            " class="mr-4" title="settings"> <i class="fas fa-cog"></i></a>
+            <a href="
+                {{ path('user.profile') }}
             " title="{{ app.user.username }} " class="mr-4"> My space </a>
             <a href="{{ path('app_logout') }}" class="mr-4">Logout</a>
         </div>

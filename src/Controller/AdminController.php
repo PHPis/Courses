@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -26,7 +27,7 @@ class AdminController extends AbstractController
      */
     public function sendEmail(MailerInterface $mailer)
     {
-        $email = (new Email())
+        $email = (new TemplatedEmail())
             ->from('tanya_yurgina@mail.ru')
             ->to('tatiana.yurgina@gmail.com')
             //->cc('cc@example.com')
@@ -34,8 +35,9 @@ class AdminController extends AbstractController
             //->replyTo('fabien@example.com')
             //->priority(Email::PRIORITY_HIGH)
             ->subject('Time for Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+            ->htmlTemplate('email/welcome.html.twig')
+            ->context([
+            ]);
 
         $mailer->send($email);
         return new Response("Message");

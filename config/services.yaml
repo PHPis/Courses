@@ -25,3 +25,18 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Services\RegisterService:
+        arguments: ['@doctrine.orm.entity_manager']
+
+    App\Services\UserService:
+        arguments: ['@doctrine.orm.entity_manager']
+
+    App\Repository\IngestionRepository:
+        arguments:
+            $paginator: '@knp_paginator'
+
+    App\Services\IngestionService:
+        arguments: ['@doctrine.orm.entity_manager']
+
+

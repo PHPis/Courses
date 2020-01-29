@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile settings{% endblock %}
+
+{% block body %}
+
+    {% include "user/navbar.html.twig" %}
+
+    <div class="container">
+        <h1 class="mt-4 mb-3">Profile settings</h1>
+        {% if app.user.photo %}
+            {% set photo =  app.user.photo %}
+            <div style="" class="w-75">
+                <img style="height: 150px;" src="{{ asset('user-photo/' ~ photo) }}" alt="">
+            </div>
+        {% endif %}
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">Upload photo:</div>
+            <div class="custom-file">
+                <input type="file" name="photo" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary mt-3">Upload</button>
+        </form>
+        
+    </div>
+{% endblock %}
