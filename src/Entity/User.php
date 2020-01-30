@@ -60,9 +60,15 @@ class User implements UserInterface
      */
     private $meals;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserDiet", mappedBy="user")
+     */
+    private $userDiet;
+
     public function __construct()
     {
         $this->meals = new ArrayCollection();
+        $this->userDiets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -204,6 +210,18 @@ class User implements UserInterface
                 $meal->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserDiet(): ?UserDiet
+    {
+        return $this->userDiet;
+    }
+
+    public function setUserDiet(UserDiet $userDiet): self
+    {
+        $this->userDiet = $userDiet;
 
         return $this;
     }

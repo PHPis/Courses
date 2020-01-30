@@ -9,10 +9,13 @@
     <div class="container mt-4">
         <h1 class="mb-3">Meals</h1>
 
-        <a href="{{ path('admin.meal.create') }}" class="btn btn-primary mb-3">Add new one</a>
-        {% include "flashes.html.twig" %}
-
+        <hr/>
+        <a href="{{ path('admin.meal.create') }}" class="btn btn-primary mb-1">Add new one</a>
+        <hr/>
         {% include "admin/meal/search.html.twig" %}
+        <hr/>
+
+        {% include "flashes.html.twig" %}
 
         <table class="table table-bordered">
             <tbody>

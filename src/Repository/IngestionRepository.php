@@ -33,6 +33,10 @@ class IngestionRepository extends ServiceEntityRepository
             ->setMaxResults(10);
     }
 
+    public function getAlllIngestionsArray(): array
+    {
+        return $this->getAllIngestionQuery()->getQuery()->getArrayResult();
+    }
     public function getAllIngestionPaginator(int $page = 1, int $countObj = 10): ?PaginationInterface
     {
         $query = $this->getAllIngestionQuery();

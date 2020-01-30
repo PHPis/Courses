@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserDietController!{% endblock %}
+
+{% block body %}
+    {% include "user/navbar.html.twig" %}
+<div class="container">
+    <h1 class="mt-4 mb-3">My Diet</h1>
+
+    <div class="row justify-content-between m-1 mb-3 mt-3">
+        <a href="{{ path('profile.diet') }}?prev={{ prevDate|date('d-m-y') }}">Prev week</a>
+        <a href="{{ path('profile.diet') }}?next={{ nextDate|date('d-m-y') }}">Next week</a>
+    </div>
+
+    <div class="row">
+        {% for day in week %}
+            <div class="col-sm-3">
+                <label for="">{{ day['day'] }}
+                {% if day['day'] == today|date('d \\of F, D') %}
+                    ✅
+                    {% endif %}
+                </label>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <div class="card-text">
+                            {% if day['date'] >= today %}
+                            {% endif %}
+                            {% if day['ingestions']  %}
+                                {% for ingestion in day['ingestions'] %}
+                                    <div>
+                                        {{ ingestion.name }}
+                                        {{ day['date']|date('d-m-Y') }}{{ ingestion.id }}
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+{#                                                <i class="fas fa-angle-down"></i>#}
+                                            </a>
+
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

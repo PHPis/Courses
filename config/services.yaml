@@ -46,4 +46,10 @@ services:
     App\Services\MealService:
         arguments: ['@doctrine.orm.entity_manager']
 
+    App\Services\UserDietService:
+        arguments: ['@doctrine.orm.entity_manager']
+
+    App\Services\UserDietIngestionService:
+        arguments: ['@doctrine.orm.entity_manager']
+
 

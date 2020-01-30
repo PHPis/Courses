@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ingestion{% endblock %}
+
+{% block body %}
+
+    {% include "user/navbar.html.twig" %}
+    <div class="container">
+        <h1 class="mt-4 mb-3">Ingestion</h1>
+        {% include "flashes.html.twig" %}
+        <form action="" method="post">
+            {% for ingestion in ingestions %}
+                <div class="form-check d-flex justify-content-start">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="ingestion-select[]"
+                           id="gridRadios{{ ingestion.id }}"
+                           value="{{ ingestion.id }}"
+                            {% if ingestion in user.userDiet.ingestions %}
+                                checked
+                            {% endif %}
+                    >
+                    <label class="form-check-label" for="gridRadios{{ ingestion.id }}">
+                        {{ ingestion.name }}
+                    </label>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary mt-3">Save</button>
+        </form>
+
+    </div>
+{% endblock %}

@@ -59,6 +59,15 @@ class IngestionService
 
     }
 
+    public function getAllIngestionsArray():array
+    {
+        $ingestions = $this->entityManager
+            ->getRepository(Ingestion::class)
+            ->getAlllIngestionsArray();
+
+        return $ingestions;
+    }
+
     public function getAllIngestions(): ?PaginationInterface
     {
         $ingestions = $this->entityManager
