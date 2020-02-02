@@ -17,7 +17,7 @@ class UserDietService
         $this->entityManager = $em;
     }
 
-    public function createUserDiet(User $user): ?UserDiet
+    public function createUserDiet(User $user, IngestionService $ingestionService): ?UserDiet
     {
         $date = new \DateTime();
         $userDiet = new UserDiet();
@@ -27,14 +27,17 @@ class UserDietService
         $this->entityManager->persist($userDiet);
         try {
             $this->entityManager->flush();
+            $this->addAllIngestion($userDiet, $ingestionService);
             return $userDiet;
         } catch (\Exception $e) {
             throw new \Exception("Exception of creating Ingestion.");
         }
+
     }
 
-    public function addAllIngestion(UserDiet $userDiet, array $ingestions, IngestionService $ingestionService)
+    public function addAllIngestion(UserDiet $userDiet, IngestionService $ingestionService)
     {
+        $ingestions = $ingestionService->getAllIngestionsArray();
         foreach ($ingestions as $ingestion) {
             $ingestion = $ingestionService->findById($ingestion['id']);
             $userDiet->addIngestion($ingestion);
@@ -74,9 +77,9 @@ class UserDietService
         $requestPrevDay = $request->query->get('prev');
         $requestNextDay = $request->query->get('next');
         if($requestPrevDay) {
-            $startDay = \DateTime::createFromFormat('d-m-y',$requestPrevDay);
+            $startDay = \DateTime::createFromFormat('d-m-y',$requestPrevDay)->setTime(0, 0, 0, 0);
         } elseif ($requestNextDay) {
-            $startDay = \DateTime::createFromFormat('d-m-y',$requestNextDay);
+            $startDay = \DateTime::createFromFormat('d-m-y',$requestNextDay)->setTime(0, 0, 0, 0);
         } elseif ($today->format('N') != 1) {
             $startDay = (new \DateTime('last monday'));
         } else {
@@ -87,8 +90,7 @@ class UserDietService
 
     public function getLastDay(\DateTime $startDay): \DateTime
     {
-        $lastDay = (new \DateTime($startDay->format('d-m-Y')))->modify('+1 week');
-        return $lastDay;
+        return (new \DateTime($startDay->format('d-m-Y')))->modify('+1 week');
     }
 
     public function prevDay(\DateTime $startDay): \DateTime
@@ -101,14 +103,14 @@ class UserDietService
         return (new \DateTime($startDay->format('d-m-Y')))->modify('+1 week');
     }
 
-    public function getIngestionsOfDate(\DateTime $date, \DateTime $today, UserDiet $userDiet): ?Collection
+    public function getIngestionsOfDate(\DateTime $date, \DateTime $today, UserDiet $userDiet): ?array
     {
         if ($date >= $today || $date->format('d:m:Y') == $today->format('d:m:Y')) {
-            return $userDiet->getIngestions();
+            return $userDiet->getIngestions()->toArray();
         } elseif ($userDiet->getUserDays()->count() != 0) {
             foreach ($userDiet->getUserDays() as $day){
                 if ($day->getDate() == $date){
-                    return $userDiet->getUserDays()->getIngestions();
+                    return $userDiet->getUserDays()->getIngestions()->toArray();
                 }
             }
             return null;

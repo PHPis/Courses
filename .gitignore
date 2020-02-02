@@ -15,4 +15,4 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 /.idea
-/docker/data/mysql/
+/docker/data/mysql

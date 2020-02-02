@@ -52,4 +52,7 @@ services:
     App\Services\UserDietIngestionService:
         arguments: ['@doctrine.orm.entity_manager']
 
+    App\Services\UserDayService:
+        arguments: ['@doctrine.orm.entity_manager']
+
 

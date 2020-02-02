@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Services\IngestionService;
 use App\Services\RegisterService;
 use App\Services\UserDietService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -23,14 +24,15 @@ class RegistrationController extends AbstractController
     public function register(RegisterService $registerService,
                              Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
-                             UserDietService $userDietService): Response
+                             UserDietService $userDietService,
+                             IngestionService $ingestionService): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $registerService->newUser($user, $form, $passwordEncoder, $userDietService);
+            $registerService->newUser($user, $form, $passwordEncoder, $userDietService, $ingestionService);
             return $this->redirectToRoute('app_login');
         }
 

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserDayController!{% endblock %}
+
+{% block body %}
+    {% include "user/navbar.html.twig" %}
+<div class="container">
+    <h1 class="mt-4 mb-3">Date:</h1>
+    <form action="" method="get" class="form-inline mb-4">
+            <div class="form-group mr-3">
+                    <input type="date" class="form-control" id="date" name="date" placeholder="Date">
+            </div>
+            <button type="submit" class="btn btn-primary"> Save</button>
+    </form>
+</div>
+{% endblock %}

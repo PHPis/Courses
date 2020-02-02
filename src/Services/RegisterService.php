@@ -23,7 +23,8 @@ class RegisterService extends AbstractController
     public function newUser(User $user,
                             FormInterface $form,
                             UserPasswordEncoderInterface $passwordEncoder,
-                            UserDietService $userDietService): ?User
+                            UserDietService $userDietService,
+                            IngestionService $ingestionService): ?User
     {
         // encode the plain password
         $user->setPassword(
@@ -43,7 +44,7 @@ class RegisterService extends AbstractController
             throw new \Exception("Exception.");
         }
 
-        $userDiet = $userDietService->createUserDiet($user);
+        $userDiet = $userDietService->createUserDiet($user, $ingestionService);
 
         // do anything else you need here, like send an email
 

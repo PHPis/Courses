@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Services\IngestionService;
+use App\Services\UserDayService;
 use App\Services\UserDietService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ class UserDietController extends AbstractController
     /**
      * @Route("/profile/diet", name="profile.diet")
      */
-    public function diet(Request $request, UserDietService $userDietService, IngestionService $ingestionService)
+    public function diet(Request $request, UserDietService $userDietService, UserDayService $dayService)
     {
         $user = $this->getUser();
 
@@ -27,15 +28,14 @@ class UserDietController extends AbstractController
 
         $week = [];
         for (; $startDay < $lastDay; $startDay->modify('+1 day')) {
-            $week[] = [
-                'day' => $startDay->format('d \of\ F, D'),
-                'date' => (new \DateTime())->setTimestamp($startDay->getTimestamp()),
-                'ingestions' => $userDietService->getIngestionsOfDate(
-                    (new \DateTime())->setTimestamp($startDay->getTimestamp()),
-                    $today,
-                    $user->getUserDiet()
-                )
-            ];
+            $day = $dayService->searchDayByDate($startDay, $user->getUserDiet());
+            if (empty($day)){
+                $week[] = [
+                    'date' => (new \DateTime())->setTimestamp($startDay->getTimestamp()),
+                ];
+            } else {
+                $week[] = $day[0];
+            }
         }
 
         return $this->render('user_diet/index.html.twig', [
@@ -66,8 +66,7 @@ class UserDietController extends AbstractController
 
         if ($user->getUserDiet()->getIngestions()->count() == 0) {
             $userDietService->addAllIngestion(
-                $user->getUserDiet(),
-                $ingestionService->getAllIngestionsArray(),
+                $user->getUserDiet()                ,
                 $ingestionService);
         }
 

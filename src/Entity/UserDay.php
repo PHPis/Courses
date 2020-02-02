@@ -39,9 +39,15 @@ class UserDay
      */
     private $ingestions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserDayMeal", mappedBy="userDay", orphanRemoval=true)
+     */
+    private $userDayMeals;
+
     public function __construct()
     {
         $this->ingestions = new ArrayCollection();
+        $this->userDayMeals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,6 +112,37 @@ class UserDay
     {
         if ($this->ingestions->contains($ingestion)) {
             $this->ingestions->removeElement($ingestion);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserDayMeal[]
+     */
+    public function getUserDayMeals(): Collection
+    {
+        return $this->userDayMeals;
+    }
+
+    public function addUserDayMeal(UserDayMeal $userDayMeal): self
+    {
+        if (!$this->userDayMeals->contains($userDayMeal)) {
+            $this->userDayMeals[] = $userDayMeal;
+            $userDayMeal->setUserDay($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserDayMeal(UserDayMeal $userDayMeal): self
+    {
+        if ($this->userDayMeals->contains($userDayMeal)) {
+            $this->userDayMeals->removeElement($userDayMeal);
+            // set the owning side to null (unless already changed)
+            if ($userDayMeal->getUserDay() === $this) {
+                $userDayMeal->setUserDay(null);
+            }
         }
 
         return $this;

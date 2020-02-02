@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\UserDay;
+use App\Entity\UserDiet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -17,6 +18,18 @@ class UserDayRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, UserDay::class);
+    }
+    public function searchUserDayByDate(UserDiet $userDiet, \DateTime $date): ?array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u', 'i')
+            ->innerJoin('u.ingestions', 'i')
+            ->andWhere('u.diet = :diet')
+            ->andWhere('u.date = :date')
+            ->setParameter('date', $date)
+            ->setParameter('diet', $userDiet)
+            ->getQuery()
+            ->getArrayResult();
     }
 
     // /**
